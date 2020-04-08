@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "gdb Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/${fileBasenameNoExtension}.out",
+            "stopAtEntry": false,
+            "externalConsole": true,
+            "cwd":"${workspaceFolder}",
+            "preLaunchTask": "gtest",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/local/bin/gdb"
+          }
+    ]
+}

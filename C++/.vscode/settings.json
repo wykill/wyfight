@@ -1,0 +1,10 @@
+{
+    "code-runner.runInTerminal": true,
+    "C_Cpp.default.cppStandard": "c++11",
+    "code-runner.executorMap": {
+        "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt -std=c++14 && ./$fileNameWithoutExt"
+    },
+    "files.associations": {
+        "typeinfo": "cpp"
+    }
+}

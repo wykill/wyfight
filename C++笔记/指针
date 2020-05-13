@@ -1,0 +1,45 @@
+1. 32位操作系统指针占4个字节空间大小，64位操作系统指针占8个字节空间大小
+	cout << "sizeof(char *) is " << sizeof(char *) << endl;   //8
+    cout << "sizeof(int *) is " << sizeof(int *) << endl;     //8
+    cout << "sizeof(long *) is " << sizeof(long *) << endl;   //8
+
+2. 空指针和野指针
+	1. 空指针：指针变量指向内存中编号为0的空间
+	用途：初始化指针变量
+	注意：空指针指向的内存是不可以访问的；
+	0-255之间的内存编号是系统占用的，不允许用户访问
+	int *b = NULL;
+    // b = 0x7ffee72d9a5d;  error
+    cout << "b = " << b << endl;   //0x0
+    cout << "*b = " << *b << endl;    //Segmentation fault: 11
+
+    2. 野指针：指针变量指向非法的内存空间
+    int *c = (int *)0x1100;
+    cout << "c = " << c << endl;      //c = 0x1100
+    cout << "*c = " << *c << endl;     //Segmentation fault: 11
+
+3. const指针  (看指针后面是什么就const就修饰什么)
+	const修饰指针指向的值   常量指针    int const *p = 0;  (指针指向可以变，指向的内容不能变)
+	const修饰指针   指针常量    int * const p = 0;  (指针指向不能变，指向的内容可以变)
+	int a = 10;
+    int b = 20;
+    const int *p = &a;
+    *p = b                  //错误
+    p = &b;					//正确
+    int * const ptr = &a;	
+    *ptr = b;				//正确
+    ptr = &b;				//错误
+
+4. 指针和数组
+	int arr[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    int * ptr = arr;
+    char* ptrChar = (char *)ptr;
+    cout << (ptrChar[0] == 0x01) << endl;     // 1   小端机器
+	利用指针访问数组
+	cout << "*(ptr+4) is " << *(ptr + 4) << endl;
+    for (int i = 0; i < sizeof(arr)/sizeof(int); i++) {
+        cout << *ptr << endl;
+        ptr++;
+    }
+
+5。指针和函数

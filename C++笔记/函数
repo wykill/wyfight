@@ -1,0 +1,14 @@
+1. 函数调用之前需要先声明。。声明可以有多次，但是函数定义只能有一次！
+	int getMax(int, int);
+	int getMax(int, int);
+	int getMax(int, int);
+
+	int main () {
+	    cout << getMax(1, 10) << endl;
+	    return 0;
+	}
+
+	int getMax(int a, int b) {
+	    return a > b ? a : b;
+	}
+

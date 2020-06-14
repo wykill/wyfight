@@ -99,15 +99,17 @@ int getPriority(char ch)
     return 0;
 }
 
-void MidToPostFix(::std::string const& str)
+::std::string MidToPostFix(::std::string const& str)
 {
     // ::std::string const& str = "1 + (3 - 2 * 1) * 8 / (4 + 2)";
+    ::std::string resultStr;
     ::std::cout << "MidFixStr is " << str << ::std::endl;
     ::std::cout << "After transfer to PostFix: " << ::std::endl;
     StackList<char> stack;
     int errPos = -1;
     for (int i = 0; i < str.size(); i++) {
         if (isNum(str[i])) {
+            resultStr += str[i];
             ::std::cout << str[i];
             continue;
         }
@@ -125,6 +127,7 @@ void MidToPostFix(::std::string const& str)
                     break;
                 }
                 ::std::cout << popVal;
+                resultStr += popVal;
             }
             continue;
         }
@@ -138,15 +141,63 @@ void MidToPostFix(::std::string const& str)
         // ::std::cout << "topEle: " << stack.top() << ::std::endl;
         // ::std::cout << "str[i]: " << str[i] << ::std::endl;
         if (priority <= topElePrio) {
+            resultStr += stack.top();
             ::std::cout << stack.pop();
         }
         stack.push(str[i]);
     }
     while (stack.size() != 0) {
+        resultStr += stack.top();
         ::std::cout << stack.pop();
+
     }
     ::std::cout << ::std::endl;
+    return resultStr;
+}
 
+void getNum(int& firstNum, int& secondNum, StackList<int>& stack)
+{
+    secondNum = stack.pop();
+    firstNum = stack.pop();
+}
+
+int getPostStrResult(::std::string const& str)
+{
+    StackList<int> stack;
+    for (int i = 0; i < str.size(); i++) {
+        if (isNum(str[i])) {
+            stack.push(str[i] - '0');
+            continue;
+        }
+        int secondNum, firstNum;
+        int resultNum;
+        switch (str[i]) {
+            case '*' : 
+                getNum(firstNum, secondNum, stack);
+                resultNum = firstNum * secondNum;
+                break;
+            case '/' :
+                getNum(firstNum, secondNum, stack);
+                resultNum = firstNum / secondNum;
+                break;
+            case '+' :
+                getNum(firstNum, secondNum, stack);
+                resultNum = firstNum + secondNum;
+                break;
+            case '-' :
+                getNum(firstNum, secondNum, stack);
+                resultNum = firstNum - secondNum;
+                break;
+            default :
+                break;
+        }
+        stack.push(resultNum);
+    }
+
+    while (stack.size() == 1) {
+        return stack.pop();
+    }
+    return 0;
 }
 
 
@@ -155,8 +206,13 @@ int main()
 {
     ::std::string const& str = "1 + (3 - 2 * 1) * 8 / (4 + 2)";
     ::std::string const& str2 = "1 + (5 * 8 / 2) - 3";
+    ::std::string postStr("");
+    int result;
     // test01();
-    parenTest();
-    // MidToPostFix(str2);
+    // parenTest();
+    postStr = MidToPostFix(str2);
+    ::std::cout << "PostStr is " << postStr << ::std::endl;
+    result = getPostStrResult(postStr);
+    ::std::cout << "ResultNum is " << result << ::std::endl;
     return 0;
 }
